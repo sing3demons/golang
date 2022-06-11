@@ -4,6 +4,7 @@ import (
 	"github.com/go-redis/redis/v8"
 	"github.com/gofiber/fiber/v2"
 	"github.com/sing3demons/goredis/repositories"
+	"github.com/sing3demons/goredis/services"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -29,13 +30,15 @@ func main() {
 	db := initDatabase()
 	redis := initRedis()
 
-	productRepo := repositories.NewProductRepositoryRedis(db, redis)
-	// productRepo := repositories.NewProductRepository(db)
+	// productRepo := repositories.NewProductRepositoryRedis(db, redis)
+	productRepo := repositories.NewProductRepository(db)
+	productService := services.NewCatalogServiceRedis(productRepo, redis)
+	// productService := services.NewCatalogService(productRepo)
 
 	app := fiber.New()
 
 	app.Get("/hello", func(c *fiber.Ctx) error {
-		products, err := productRepo.GetProducts()
+		products, err := productService.GetProducts()
 		if err != nil {
 			c.JSON(err.Error())
 		}
