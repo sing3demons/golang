@@ -34,3 +34,10 @@ func TestCheckGrade(t *testing.T) {
 	}
 
 }
+
+func BenchmarkCheckGrade(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		services.CheckGrade(80)
+	}
+
+}
