@@ -33,3 +33,9 @@ go test ./... -v
     "uncoveredGutterStyle": "blockred"
 }
 ```
+
+### test pkg stretchr/testify
+
+```stretchr/testify
+go get github.com/stretchr/testify
+```
